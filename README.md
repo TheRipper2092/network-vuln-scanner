@@ -29,15 +29,20 @@ A web-based tool that uses Nmap to scan IP addresses or domains for open ports, 
    git clone https://github.com/YOUR_USERNAME/network-vulnerability-scanner.git
    cd network-vulnerability-scanner
 
-Create a virtual environment
-  python -m venv venv
-  source venv/bin/activate    # On Windows: venv\Scripts\activate
+2. Create a virtual environment
+   ```bash
+    python -m venv venv
+   Kali: source venv/bin/activate
+   Windows: venv\Scripts\activate
 
-Install dependencies
-  pip install -r requirements.txt
+4. Install dependencies
+   ```bash
+     pip install -r requirements.txt
 
-Run the app
-  python app.py
+6. Run the app
+    ```bash
+     python app.py
 
-Visit in browser
-  http://127.0.0.1:5000
+8. Visit in browser
+   ```bash
+     http://127.0.0.1:5000
