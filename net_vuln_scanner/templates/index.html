@@ -1,0 +1,48 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Network Vulnerability Scanner</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md">
+    <h1 class="text-2xl font-bold mb-4">🔍 Network Vulnerability Scanner</h1>
+    <form method="post">
+      <input type="text" name="target" placeholder="Enter IP or Domain" class="w-full border p-2 rounded mb-4" required>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Scan</button>
+    </form>
+
+    {% if error %}
+      <p class="text-red-600 mt-4">{{ error }}</p>
+    {% endif %}
+
+    {% if result %}
+    <div class="mt-6">
+      <h2 class="text-xl font-semibold mb-2">Scan Results for {{ result.original_target }}</h2>
+      <p><strong>Resolved IP:</strong> {{ result.resolved_ip }}</p>
+      <p><strong>OS Detected:</strong> {{ result.os }}</p>
+      <h3 class="mt-4 font-bold">Open Ports:</h3>
+      <ul class="list-disc ml-5 mt-2">
+        {% for port in result.open_ports %}
+          <li>{{ port.port }}/{{ port.protocol }} – {{ port.service }}</li>
+        {% endfor %}
+      </ul>
+
+      <form method="post" action="/download-pdf">
+        <input type="hidden" name="target" value="{{ result.original_target }}">
+        <input type="hidden" name="ip" value="{{ result.resolved_ip }}">
+        <input type="hidden" name="os" value="{{ result.os }}">
+        {% for port in result.open_ports %}
+          <input type="hidden" name="ports" value="{{ port.port }}/{{ port.protocol }} – {{ port.service }}">
+        {% endfor %}
+        <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+          Download PDF Report
+        </button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
